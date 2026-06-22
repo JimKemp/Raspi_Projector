@@ -101,8 +101,8 @@ class UI:
     # --- screens -----------------------------------------------------------
 
     def draw_splash(self):
-        self.screen.fill(config.SPLASH_BG_COLOR)
-        txt = self.font_splash.render(config.SPLASH_TEXT, True, config.HIGHLIGHT_COLOR)
+        self.screen.fill((0, 40, 60))
+        txt = self.font_splash.render(config.SPLASH_TEXT, True, (253, 253, 253))
         self.screen.blit(
             txt, ((self.w - txt.get_width()) // 2, (self.h - txt.get_height()) // 2)
         )
