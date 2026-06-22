@@ -1,0 +1,35 @@
+[Unit]
+Description=Jimflix media player (console / no desktop)
+# We don't need the graphical target at all in console mode -- just the basic
+# system and local filesystems. Start after multi-user is up.
+After=multi-user.target
+After=systemd-user-sessions.service
+
+[Service]
+Type=simple
+User=user
+WorkingDirectory=/home/user/jimflix
+ExecStart=/usr/bin/python3 /home/user/jimflix/main.py
+
+# --- Console framebuffer / KMS access ---
+# Bind the service to a virtual terminal so SDL's kmsdrm backend can take over
+# the screen, and grant access to the DRM/input devices.
+TTYPath=/dev/tty1
+StandardInput=tty
+StandardOutput=journal
+StandardError=journal
+# Take control of tty1 (the console you see on boot).
+TTYReset=yes
+TTYVHangup=yes
+
+# Runtime dir for ALSA/Pulse + any per-user sockets. UID 1000 = first user on
+# Raspberry Pi OS; change if `id -u user` shows a different number.
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+# No DISPLAY here on purpose -- its absence is what tells Jimflix (and SDL) to
+# use the console KMS/DRM backend instead of X11.
+
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
