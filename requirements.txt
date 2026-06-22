@@ -1,0 +1,7 @@
+pygame
+PyYAML
+# RPi.GPIO is Pi-only. On the Pi:  pip3 install RPi.GPIO
+# Off the Pi (laptop testing), leave it out -- IR input no-ops and you drive
+# the UI with the keyboard.
+#
+# VLC is a system package, not pip:  sudo apt install vlc
